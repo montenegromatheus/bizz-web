@@ -1,0 +1,58 @@
+{
+    "family": "web-bizzbot", 
+    "networkMode": "awsvpc",
+    "containerDefinitions": [
+        {
+        "name": "web-bizzbot",
+        "image": "280367806107.dkr.ecr.us-east-1.amazonaws.com/web-bizzbot:latest", 
+        "portMappings": [
+            {
+            "containerPort": 3000,
+            "hostPort": 80,
+            "protocol": "tcp"
+            }
+        ],
+        "essential": true,
+        "environment": [
+            {
+            "name": "NODE_ENV",
+            "value": "production"
+            },
+            {
+            "name": "HOSTNAME",
+            "value": "0.0.0.0"
+            },
+            {
+            "name": "PORT",
+            "value": "3000"
+            }
+        ],
+        "logConfiguration": {
+            "logDriver": "awslogs",
+            "options": {
+            "awslogs-group": "/ecs/my-app",
+            "awslogs-region": "us-east-1", 
+            "awslogs-stream-prefix": "ecs"
+            }
+        },
+        "memory": 512, 
+        "cpu": 256
+        }
+    ],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "256",
+    "memory": "512",
+    "networkConfiguration": {
+        "awsvpcConfiguration": {
+        "subnets": [
+            "subnet-abc12345" 
+        ],
+        "securityGroups": [
+            "sg-abc12345"
+        ],
+        "assignPublicIp": "ENABLED"
+        }
+    }
+}
